@@ -13,7 +13,7 @@ struct ToadolistView: View {
     @State private var toadName = ""
     @State private var toadDescription = ""
     @State private var tadpoles: [Tadpole] = []
-    @State private var currentToad: (name: String, description: String)? = nil
+    @State private var currentToad: Toad? = nil
     @State private var isEditingMode = false
     @State private var toadOpacity: Double = 1.0 // Initial opacity
     @State private var toadCompleted: Bool = false // Track if toad is completed
@@ -31,7 +31,7 @@ struct ToadolistView: View {
                     ToolbarItem(placement: .navigationBarLeading) {
                         Button(action: {
                             if isEditingMode {
-                                self.currentToad = (name: toadName, description: toadDescription)
+                                self.currentToad = Toad(name: toadName, description: toadDescription, completed: false)
                             }
                             isEditingMode.toggle()
                         }) {

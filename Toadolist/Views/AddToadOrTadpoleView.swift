@@ -12,7 +12,7 @@ struct AddToadOrTadpoleView: View {
     @Binding var toadName: String
     @Binding var toadDescription: String
     @Binding var tadpoles: [Tadpole]
-    @Binding var currentToad: (name: String, description: String)?
+    @Binding var currentToad: Toad?
 
     @State private var newTadpoleName = ""
     @State private var newTadpoleDescription = ""
@@ -68,8 +68,10 @@ struct AddToadOrTadpoleView: View {
                 .foregroundColor(.green),
                 trailing: Button("Save") {
                     if !toadName.isEmpty && !toadDescription.isEmpty {
-                        currentToad = (
-                            name: toadName, description: toadDescription
+                        currentToad = Toad(
+                            name: toadName,
+                            description: toadDescription,
+                            completed: false
                         )
                     }
                     isPresented = false
@@ -88,6 +90,6 @@ struct AddToadOrTadpoleView: View {
         tadpoles: .constant([
             Tadpole(name: "Tadpole", description: "Description", completed: true)
         ]),
-        currentToad: .constant((name: "Tadpole", description: "Description"))
+        currentToad: .constant(Toad(name: "Toad", description: "Description", completed: false))
     )
 }
