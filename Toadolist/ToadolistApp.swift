@@ -11,7 +11,7 @@ import SwiftUI
 struct ToadolistApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ToadolistView()
         }
     }
 }
