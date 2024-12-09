@@ -12,7 +12,7 @@ struct AddToadOrTadpoleView: View {
     @Binding var toadName: String
     @Binding var toadDescription: String
     @Binding var tadpoles: [Tadpole]
-    @Binding var currentToad: Toad?
+    @Binding var currentToad: Toad
 
     @State private var newTadpoleName = ""
     @State private var newTadpoleDescription = ""
