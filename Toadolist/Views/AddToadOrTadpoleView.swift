@@ -13,6 +13,7 @@ struct AddToadOrTadpoleView: View {
     @Binding var toadDescription: String
     @Binding var tadpoles: [Tadpole]
     @Binding var currentToad: Toad
+    
 
     @State private var newTadpoleName = ""
     @State private var newTadpoleDescription = ""
@@ -72,6 +73,7 @@ struct AddToadOrTadpoleView: View {
                             name: toadName,
                             description: toadDescription,
                             completed: false
+                            
                         )
                     }
                     isPresented = false
@@ -90,6 +92,6 @@ struct AddToadOrTadpoleView: View {
         tadpoles: .constant([
             Tadpole(name: "Tadpole", description: "Description", completed: true)
         ]),
-        currentToad: .constant(Toad(name: "Toad", description: "Description", completed: false))
+        currentToad: .constant(Toad(name: "Toad", description: "Description", completed: true))
     )
 }

@@ -76,15 +76,15 @@ struct TadpoleRowView: View {
     )
 }
 
-#Preview {
-    TadpoleRowView(
-        tadpole: .constant(
-            Tadpole(
-                name: "Tadpole",
-                description: "Description",
-                completed: true)
-        ),
-        isEditingMode: .constant(true),
-        onDelete: {}
-    )
-}
+//#Preview {
+//    TadpoleRowView(
+//        tadpole: .constant(
+//            Tadpole(
+//                name: "Tadpole",
+//                description: "Description",
+//                completed: true)
+//        ),
+//        isEditingMode: .constant(true),
+//        onDelete: {}
+//    )
+//}

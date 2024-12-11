@@ -18,30 +18,32 @@ struct ToadolistView: View {
     @State private var toadOpacity: Double = 1.0 // Initial opacity
     @State private var toadCompleted: Bool = false // Track if toad is completed
     
-
     var body: some View {
         NavigationView {
             VStack {
-                Image("SadFrog", label: Text("Sketch of a sad frog"))
+//                Image("SadFrog", label: Text("Sketch of a sad frog"))
+//                    .resizable()
+//                    .scaledToFit()
+//                    .frame(width: 100, height: 100)
+//                    .padding(.trailing, 260)
+                
                 List {
                     toadSection
                     tadpoleSection
                 }
-                .navigationTitle("Toadolist")
+                .navigationTitle(Text("Toadolist").font(.system(.largeTitle, design: .rounded))) // Rounded title
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
-                        EditButton()
                         Button {
-                            if isEditingMode {
-                                self.currentToad = Toad(name: toadName, description: toadDescription, completed: false)
-                            }
                             isEditingMode.toggle()
                         } label: {
                             Text(isEditingMode ? "Done" : "Edit")
-                                .foregroundColor(.green)
+                                .tint(Color.green)
                         }
                         .disabled(tadpoles.isEmpty)
                     }
+                    
+                    
                     ToolbarItemGroup(placement: .topBarTrailing) {
                         Button {
                             isModalPresented = true
@@ -72,18 +74,38 @@ struct ToadolistView: View {
             }
         }
     }
-
     private var toadSection: some View {
-        Section(header: Text("Toad of the day")) {
-            if !currentToad.completed {
-                ToadView(toad: $currentToad, tadpoles: $tadpoles)
-            } else {
-                Text("Define your toad 🐸")
-                    .foregroundColor(.gray)
+            Section(header: Text("Toad of the day")) {
+                if currentToad.name.isEmpty || currentToad.completed {
+                    Text("Define your toad 🐸")
+                        .foregroundColor(.gray)
+                    .onAppear {
+                        if currentToad.completed {
+                            currentToad = Toad(name: "", description: "", completed: true)
+                        }
+                    }
+                } else {
+                    if isEditingMode {
+                        VStack {
+                            TextField("Toad Name", text: $currentToad.name)
+                                .textFieldStyle(.roundedBorder)
+                            TextField("Toad Description", text: $currentToad.description)
+                                .textFieldStyle(.roundedBorder)
+                        }
+                    } else {
+                        VStack(alignment: .leading) {
+                            ToadView(toad: $currentToad, tadpoles: $tadpoles)
+                            Button("Eat your toad") {
+                                currentToad.completed = true
+                            }
+                            .padding(.top, 8)
+                            .foregroundColor(.green)
+                        }
+                    }
+                }
             }
         }
-    }
-
+    
     private var tadpoleSection: some View {
         Section(header: Text("Tadpoles of the day")) {
             if tadpoles.isEmpty {
@@ -91,11 +113,27 @@ struct ToadolistView: View {
                     .foregroundColor(.gray)
             } else {
                 ForEach(tadpoles.indices, id: \.self) { index in
-                    TadpoleRowView(
-                        tadpole: $tadpoles[index],
-                        isEditingMode: $isEditingMode
-                    ) {
-                        tadpoles.remove(at: index)
+                    if isEditingMode {
+                        // Editable tadpole fields
+                        HStack {
+                            TextField("Tadpole Name", text: $tadpoles[index].name)
+                                .textFieldStyle(.roundedBorder)
+                            TextField("Tadpole Description", text: $tadpoles[index].description)
+                                .textFieldStyle(.roundedBorder)
+                            Button(action: {
+                                tadpoles.remove(at: index)
+                            }) {
+                                Image(systemName: "trash")
+                                    .foregroundColor(.red)
+                            }
+                        }
+                    } else {
+                        TadpoleRowView(
+                            tadpole: $tadpoles[index],
+                            isEditingMode: $isEditingMode
+                        ) {
+                            tadpoles.remove(at: index)
+                        }
                     }
                 }
             }
@@ -106,4 +144,3 @@ struct ToadolistView: View {
 #Preview {
     ToadolistView()
 }
-
