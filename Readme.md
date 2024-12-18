@@ -9,7 +9,7 @@ difficult task of the day first and then moving to the tadpoles, which means the
 🎨 App Icon supported in Light, Dark and Tinted mode!
 
 ## Installation
-1. Clone this repository: `git clone <https://github.com/your-username/tasktracker.git`>
+1. Clone this repository: `git clone https://github.com/PaolaCampanile/Toadolist.git`
 2. Open the project in Xcode.
 3. Run the app on a simulator or connected device.
 
